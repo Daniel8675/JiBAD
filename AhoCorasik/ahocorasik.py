@@ -2,14 +2,14 @@ import collections
 
 
 def substring(patterns):  # ← Funkcja odpowiada za "zlokalizowanie" wzorców które są zawarte w innych wzorcach
-    tab1, tab2, tab3 = [], [], []
+    tab1, tab2, tab3 = [], [], []  # dużo mówiące nazwy
 
     for pattern_1 in patterns:
         for pattern_2 in patterns:
             if pattern_1 != pattern_2 and pattern_1 in pattern_2:
                 tab1.append(pattern_1)  # ← Tutaj zapisywany jest wzorzec który zawiera się w innym
                 tab2.append(pattern_2)  # ← Tutaj zapisywany jest wzorzec w którym zawiera się wzór z tab1
-                tab3.append(pattern_2.index(pattern_1) + len(pattern_1) - 1)
+                tab3.append(pattern_2.index(pattern_1) + len(pattern_1) - 1)  # a jeśli występuje dwa razy?
                 # ↑ Tutaj zapisywany jest ostatni indeks wystapienia wzorca z tab1 zawartego w wzorcu z tab2
 
     return tab1, tab2, tab3
@@ -32,11 +32,11 @@ def pre_build(*patterns):  # ← Funkcja odpowiada za zbudowanie tablicy która 
         add = -1  # ← add == jest powiązana z tab3. Jeżeli add osiąga wartość z tab3 to wtedy będzie to sygnałem, że
         # powinniśmy dodać stan akcpeptacji ponieważ dotarliśmy do końca wzorca, który zawiera się w naszym "większym"
         # wzorcu
-        for i in pattern:
+        for i in pattern:  # i to słaba nazwa, o ile nie jest indeksem; a nie jest
             add += 1
             try:  # ← tablica początkowo będzie pusta, więc będziemy dostawać IndexError, który "złapany" w bloku
                 # except uzupełni naszą tablicę
-                if i in tab[j] and new_edge is False:  # ← jezeli dana litera jest juz w drzewie i nie tworzymy nowej
+                if i in tab[j] and not new_edge:  # ← jezeli dana litera jest juz w drzewie i nie tworzymy nowej
                     # galezi/krawedzi to przesuwamy j (aktualny wierzcholek) po krawedzi zawierajaca nasza litere
                     j = tab[j].get(i)
                 elif new_edge:  # ← znajdujemy sie na nowej krawedzi, więc tworzymy kolejne wierzcholki
@@ -73,7 +73,7 @@ def pre_build(*patterns):  # ← Funkcja odpowiada za zbudowanie tablicy która 
                     tab2.pop(index)
                     tab3.pop(index)
                     # ↑ usuwamy wzorce z którymi się "rozprawiliśmy"
-        except UnboundLocalError:
+        except UnboundLocalError:  # ??
             continue
 
     return tab
