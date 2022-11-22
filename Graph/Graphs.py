@@ -8,7 +8,7 @@ class Graph:  # Klasa implementuje graf prosty (tzn. nie ma krawedzi skierowanyc
         if graph is None:
             graph = {}
 
-        if type(graph) is dict or type(graph) is Graph:
+        if type(graph) is dict or type(graph) is Graph:  # czy dict i Graph są dla nas równoważne?
             self._graph = graph
         else:
             raise ValueError("Graph must be dict!!!")
@@ -27,8 +27,8 @@ class Graph:  # Klasa implementuje graf prosty (tzn. nie ma krawedzi skierowanyc
         self.is_vertex_exist(vertex_e)
 
         try:  # krawedz dodajemy tylko wtedy gdy takowa nie istnieje wynika to z faktu ze implementujemy graf prosty
-            if not self.is_edge_exist((vertex_s, vertex_e)):
-                pass
+            if not self.is_edge_exist((vertex_s, vertex_e)):  # ale is_edge_exist nie zwraca False, tylko rzuca wyjątek
+                pass  # pusty if?
         except KeyError:
             self._graph[vertex_s].append(vertex_e)
             self._graph[vertex_e].append(vertex_s)
@@ -67,19 +67,19 @@ class Graph:  # Klasa implementuje graf prosty (tzn. nie ma krawedzi skierowanyc
     @staticmethod
     def is_edge_correct(edge):
         try:
-            vertex_s, vertex_e = list(edge)
+            vertex_s, vertex_e = edge
             return vertex_s, vertex_e
         except ValueError:
             raise ValueError("You gave the wrong edge!!! The edge should look like: (vertex1, vertex2)")
 
     @staticmethod
-    def is_vertex_correct(vertex):
-        if type(vertex) is int or type(vertex) is str or type(vertex) is tuple:
+    def is_vertex_correct(vertex):  # lepiej validate_vertex; jeśli nazwa zaczyna się od is, to spodziewamy się True/False
+        if type(vertex) is int or type(vertex) is str or type(vertex) is tuple:  # a frozenset i inne typy niemodyfikowalne?
             return True
         else:
             raise TypeError("Vertex must be int, str or tuple!!!")
 
-    def is_edge_exist(self, edge):
+    def is_edge_exist(self, edge):  # niegramatyczna nazwa
         vertex_s, vertex_e = self.is_edge_correct(edge)
         if vertex_e in self._graph.get(vertex_s) and vertex_s in self._graph.get(vertex_e):
             return True
@@ -94,7 +94,7 @@ class Graph:  # Klasa implementuje graf prosty (tzn. nie ma krawedzi skierowanyc
             raise KeyError("Vertex does not exist!!!")
 
 
-class BfsIterator(Graph):
+class BfsIterator(Graph):  # czy iterator jest grafem?
 
     def bfs(self, root):
         visited, queue = [root], collections.deque([root])
