@@ -13,7 +13,7 @@ Instrukcja:
 
 
 class AhoCorasik:
-    def __init__(self, keywords=None):
+    def __init__(self, keywords=None):  # czy ten obiekt jest gotowy do użycia?
         if keywords is None:
             keywords = []
         self._keywords = keywords
@@ -34,7 +34,7 @@ class AhoCorasik:
         else:
             raise ValueError("Pattern must be string!!!")
 
-    def remove_pattern(self, word):
+    def remove_pattern(self, word):  # overkill
         if type(word) is str:
             if word in self._keywords:
                 self._keywords.remove(word)
@@ -49,7 +49,7 @@ class AhoCorasik:
         for i in range(len(tab)):
             trie.setdefault(i, tab[i])
 
-        self._automat = [trie, AhoCorasik.fail_links(trie, AhoCorasik.bfs_with_parents(trie, 0))]
+        self._automat = [trie, AhoCorasik.fail_links(trie, AhoCorasik.bfs_with_parents(trie, 0))]  # czemu to jest lista, a nie osobne atrybuty?
 
         #  return trie, AhoCorasik.fail_links(trie, AhoCorasik.bfs_with_parents(trie, 0))
 
@@ -169,8 +169,8 @@ class AhoCorasik:
 
         return visited
 
-    @staticmethod
-    def fail_links(trie, visited):
+    @staticmethod   # dlaczego to nie jest zwykła metoda?
+    def fail_links(trie, visited):  # co to jest visited?
         links = []
 
         for tab in visited:
