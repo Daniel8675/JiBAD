@@ -9,7 +9,7 @@ class KNN:
         self.training_data = None
         self.training_labels = None
 
-    def fit(self, training_data, training_labels):
+    def train(self, training_data, training_labels):
         if self.training_data is None or self.training_labels is None:
             self.training_data = training_data
             self.training_labels = training_labels
@@ -30,7 +30,7 @@ class KNN:
         predictions = []
 
         for row_index in range(rows):
-            dummy = []
+            dummy = []  # nieczytelna nazwa
 
             for column_index in range(columns):
                 cell = k_neighbours_indices[row_index][column_index]
